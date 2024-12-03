@@ -1,4 +1,3 @@
-# Quantum Results from Classical Data 
 David Budziwojski
 
 A&O Sci C111
@@ -49,3 +48,12 @@ quantum_dataset['Measurement'] = measurements
 quantum_dataset.to_csv('quantum_generated_data.csv', index=False)
 `````
 
+## Model
+Two types of machine learning models were used to a ***logistic regression*** and a ***neural network***.
+
+1. Logisitc Regression
+
+3. Neural Network
+   
+   Defintion:
+   
