@@ -47,13 +47,89 @@ quantum_dataset['Measurement'] = measurements
 
 quantum_dataset.to_csv('quantum_generated_data.csv', index=False)
 `````
+Afterward, this dataset was loaded into the same file as our model. However, before use, the features and labels of the data set were seperated and then they were split into training and testing sets. Lastly, the data was processed one last time, where the features were normalized.
+`````
+dataset_path = 'quantum_generated_data.csv'
+data = pd.read_csv(dataset_path)
+
+# Separate the features (X) and the labels (y)
+X = data.iloc[:, :-3].values  # Assuming the last 3 columns are labels
+y = data.iloc[:, -3:].idxmax(axis=1).values  # Convert one-hot encoded labels to single-class labels
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Normalize the features
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+`````
 
 ## Model
-Two types of machine learning models were used to a ***logistic regression*** and a ***neural network***.
+Two types of machine learning models were used (1) a ***logistic regression*** and (2) a ***neural network***.
 
-1. Logisitc Regression
+**Logisitc Regression**
 
-3. Neural Network
+`````
+# Initialize the Logistic Regression model
+lr = LogisticRegression(multi_class='multinomial', solver='lbfgs', max_iter=1, warm_start=True, random_state=42)
+
+# Train the model and track cost (log-loss) over epochs
+epochs = 500
+training_costs = []
+for epoch in range(epochs):
+    lr.fit(X_train, y_train)
+    y_train_pred_proba = lr.predict_proba(X_train)
+    cost = log_loss(y_train, y_train_pred_proba)
+    training_costs.append(cost)
+
+# Make predictions on the test set
+y_test_pred = lr.predict(X_test)
+y_test_pred_proba = lr.predict_proba(X_test)
+
+# Evaluate the model
+train_accuracy = accuracy_score(y_train, lr.predict(X_train))
+test_accuracy = accuracy_score(y_test, y_test_pred)
+
+print("\nFinal Performance:")
+print(f"Train Accuracy: {train_accuracy * 100:.2f}%")
+print(f"Test Accuracy: {test_accuracy * 100:.2f}%")
+`````
+
+**Neural Network**
    
-   Defintion:
-   
+The choice of using a neural network came down to the model’s adeptness in handling high-dimensional data and ability to identify complex relations that develop from such data. The TensorFlow library was used to implement a neural network with an input size corresponding to the number of features, an output size corresponding to the length of a single output, and a hidden layer of size 5. Mroeover, the compilation of the model utilized an adam optimization and a learning rate of 0.01. While a significant reason behind the use of a neural network was its complexity and its ability to model complex systems well, the choice of a hidden layer size 5 comes from the fact that the data set only contains 3 features. While an increase in size may allow the model to perform better, there is a concern about overfitting the data. As such, 5 was empirically selected after choosing various other sizes. 
+
+`````
+# Initialize and define the neural network
+print("Initializing TensorFlow neural network...")
+input_size = X_train.shape[1]
+output_size = y.shape[1]
+hidden_size = 5
+
+model = Sequential([
+    Dense(hidden_size, activation='sigmoid', input_shape=(input_size,)),
+    Dense(output_size, activation='softmax')
+])
+
+# Compile the model
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.01),
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+# Train the model
+print("Training...")
+history = model.fit(X_train, y_train, epochs=500, batch_size=32, verbose=1)
+print("Training finished")
+`````
+
+## Results
+
+The neural network's final performance was an accuracy of 87.38% on the training data and 86.30% on the testing set. Below is a Cost vs. Epochs graph for the neural network.
+
+
+![download](https://github.com/user-attachments/assets/fb964aa2-6f6a-4fa6-90f2-a6dda12ad1f1)
+
+## Analysis
+
+## Conclusion
