@@ -125,6 +125,12 @@ print("Training finished")
 
 ## Results
 
+The logistic regression's final preformance was an accuracy of 87.36% on the training data and 86.30% on the testing set. Below is a Cost vs. Epochs graph for the logistic regression as well as an ROC curve. 
+
+![download](https://github.com/user-attachments/assets/206cfa0a-ae77-4843-afb6-3e9a5ca0963d)
+
+![download](https://github.com/user-attachments/assets/321f8dc2-9c31-45ff-ac6f-ceecc3361699)
+
 The neural network's final performance was an accuracy of 87.38% on the training data and 86.30% on the testing set. Below is a Cost vs. Epochs graph for the neural network.
 
 
