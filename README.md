@@ -47,7 +47,7 @@ quantum_dataset['Measurement'] = measurements
 
 quantum_dataset.to_csv('quantum_generated_data.csv', index=False)
 `````
-Afterward, this dataset was loaded into the same file as our model. However, before use, the features and labels of the data set were seperated and then they were split into training and testing sets. Lastly, the data was processed one last time, where the features were normalized.
+Afterward, this dataset was loaded into the same file as our model. However, before use, the features and labels of the data set were separated and then they were split into training and testing sets. Lastly, the data was processed one last time, where the features were normalized.
 `````
 dataset_path = 'quantum_generated_data.csv'
 data = pd.read_csv(dataset_path)
@@ -100,7 +100,7 @@ print(f"Test Accuracy: {test_accuracy * 100:.2f}%")
 
 **Neural Network**
    
-The choice of using a neural network came down to the model’s adeptness in handling high-dimensional data and ability to identify complex relations that develop from such data. The TensorFlow library was used to implement a neural network with an input size corresponding to the number of features, an output size corresponding to the length of a single output, and a hidden layer of size 5. Mroeover, the compilation of the model utilized an adam optimization and a learning rate of 0.05. While a significant reason behind the use of a neural network was its complexity and its ability to model complex systems well, the choice of a hidden layer size 5 comes from the fact that the data set only contains 3 features. While an increase in size may allow the model to perform better, there is a concern about overfitting the data. As such, 5 was empirically selected after choosing various other sizes. 
+The choice of using a neural network came down to the model’s adeptness in handling high-dimensional data and ability to identify complex relations that develop from such data. The TensorFlow library was used to implement a neural network with an input size corresponding to the number of features, an output size corresponding to the length of a single output, and a hidden layer of size 5. Moreover, the compilation of the model utilized an adam optimization and a learning rate of 0.05. While a significant reason behind the use of a neural network was its complexity and its ability to model complex systems well, the choice of a hidden layer size 5 comes from the fact that the data set only contains 3 features. While an increase in size may allow the model to perform better, there is a concern about overfitting the data. As such, 5 was empirically selected after choosing various other sizes. 
 
 `````
 # Initialize and define the neural network
@@ -127,13 +127,13 @@ print("Training finished")
 
 ## Results
 
-The logistic regression's final preformance was an accuracy of 87.36% on the training data and 86.30% on the testing set. Below is a Cost vs. Epochs graph for the logistic regression as well as an ROC curve, which is seen to flatten out around 0.4. 
+The logistic regression's final performance was an accuracy of 87.36% on the training data and 86.30% on the testing set. Below is a Cost vs. Epochs graph for the logistic regression as well as a ROC curve, which is seen to flatten out around 0.4. 
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/206cfa0a-ae77-4843-afb6-3e9a5ca0963d" alt="download" width="600" height="500"/>
 </div>
 
-The ROC curve for the logistic regression below labels three classes: 0, 1, 2. These AUC values of a class corresponds to how well the model distinguishes samples from the given class in comparison to those from the other two classes. As noted in the legend of the graph: Class 0 has an AUC of 0.75, Class 1 has an AUC of 0.68, and Class 2 has an AUC of 0.73. 
+The ROC curve for the logistic regression below labels three classes: 0, 1, and 2. These AUC values of a class correspond to how well the model distinguishes samples from the given class in comparison to those from the other two classes. As noted in the legend of the graph: Class 0 has an AUC of 0.75, Class 1 has an AUC of 0.68, and Class 2 has an AUC of 0.73. 
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/321f8dc2-9c31-45ff-ac6f-ceecc3361699" alt="download" width="600" height="500"/>
@@ -145,7 +145,7 @@ The neural network's final performance was an accuracy of 87.38% on the training
   <img src="https://github.com/user-attachments/assets/da135b52-1389-48b1-9d13-7ed71ac7f487" alt="download" width="600" height="500"/>
 </div>
 
-Similar to the logistic regression, the ROC curve below labels the same three classes and as noted in the legend of the graph: Class 0 has an AUC of 0.74, Class 1 has an AUC of 0.68, and Class 2 has an AUC of 0.73. 
+Similar to the logistic regression, the ROC curve below labels the same three classes, and as noted in the legend of the graph: Class 0 has an AUC of 0.74, Class 1 has an AUC of 0.68, and Class 2 has an AUC of 0.73. 
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/99749f86-53ae-430a-b3e4-a8d048001d43" alt="download" width="600" height="500"/>
@@ -155,13 +155,13 @@ Similar to the logistic regression, the ROC curve below labels the same three cl
 
 ## Analysis
 
-In terms of the accuracy of both models, they had identical accuracies of 86.30 on the testing result and a slight difference of .02% on the training data. This hints at the notion that both models do a fairly similar job in their respective predictions. The Cost vs. Epochs graph for the logistic regression illustrated a rapid decrease and early convergence of the cost function. While the neural network's Cost vs. Epochs graph also had its cost function decrease, the rate was substantially slower in comparison despite the epochs being the same. There are a couple of possibilities for the slower decrease of the cost function such as issues with the learning rate being too small and underfiting. Looking at the ROC curves for both, they also both look fairly similar to one another. The AUC values for cases 1 and 2 are the same for both at 0.68 and 0.73 respectively. Case 0 is 0.01 higher for the logistic regression at 0.75. While in both cases, the respective values indicate better performance than guessing randomly, the results are moderate and leave room for improvement (for both models). 
+In terms of the accuracy of both models, they had identical accuracies of 86.30 on the testing result and a slight difference of .02% on the training data. This hints at the notion that both models do a fairly similar job in their respective predictions. The Cost vs. Epochs graph for the logistic regression illustrated a rapid decrease and early convergence of the cost function. While the neural network's Cost vs. Epochs graph also had its cost function decrease, however, the rate was substantially slower in comparison despite 250 more epochs. There are a couple of possibilities for the slower decrease of the cost function such as issues with the learning rate being too small and underfiting which begins to hint the model may be slightly too complicated for the data set used. Looking at the ROC curves for both, they also look fairly similar to one another. The AUC values for cases 1 and 2 are the same for both at 0.68 and 0.73 respectively. Case 0 is 0.01 higher for the logistic regression at 0.75. While in both cases, the respective values indicate better performance than guessing randomly, the results are moderate and leave room for improvement (for both models). 
 
 ## Conclusion
 
-The similar results by both models hint at the idea the data is possibly linearly related in some manner because logistic regression performs rather well on such data, as was seen in this case. This brings up a question about whether the use of such a complex model like a neural network is justifiable in this case, especially since a much simpler model performed comparingly well. In some sense, it is justifiable in this case (where there are only 3 features) that the use of logistic regression may be the better choice. However, if more features were added (and hence increasing the complexity of the relationship between features and measurement), this decision may not be suitable; especially, if the relationships are not as linear. Moreover, it is apparent that there was room for improvement in terms of adjusting the hyperparameters of the neural network since for the most part they were empirically adjusted. Some possible changes that could be added would be the addition of features in the data set and the usage of different model types. A point of concern to think about in terms of the data is that it was created using (initially) a random number generator which is not truly random and may possibly lead unforeseen patterns to arise within the synthetic data set. Ultimately, the logistic regression and the neural network perform decently at relating classical data to pseudo-quantum data. However, there is an underlying idea illustrated after the results: a complex model does not necessarily mean that it is better.
+The similar results by both models hint at the idea the data is possibly linearly related in some manner because logistic regression performs rather well on such data, as was seen in this case. This brings up to question of whether the use of such a complex model like a neural network is justifiable in this case, especially since a much simpler model performed comparingly well. In some sense, it is justifiable in this case (where there are only 3 features) that the use of logistic regression may be the better choice. However, if more features were added (and hence increasing the complexity of the relationship between features and measurement), this decision may not be suitable; especially, if the relationships are not as linear. Moreover, it is apparent that there was room for improvement in terms of adjusting the hyperparameters of the neural network since for the most part they were empirically adjusted. Some possible changes that could be added would be the addition of features in the data set and the usage of different model types. A point of concern to think about in terms of the data is that it was created using (initially) a random number generator which is not truly random and may possibly lead unforeseen patterns to arise within the synthetic data set. Ultimately, the logistic regression and the neural network perform decently at relating classical data to pseudo-quantum data. However, there is an underlying idea illustrated after the results: a complex model does not necessarily mean that it is better.
 
 ## References
 
-1. Peter W. Shor, "Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer," *arXiv preprint quant-ph/9508027*, 1994. Available at: [https://arxiv.org/abs/quant-ph/9508027](https://arxiv.org/abs/quant-ph/9508027)
+1. Bernhardt, C. (2019). Quantum Computing for Everyone. MIT Press. ISBN: 978-0262039253.
 
