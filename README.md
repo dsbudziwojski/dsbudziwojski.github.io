@@ -133,11 +133,51 @@ The logistic regression's final performance was an accuracy of 87.36% on the tra
   <img src="https://github.com/user-attachments/assets/206cfa0a-ae77-4843-afb6-3e9a5ca0963d" alt="download" width="600" height="500"/>
 </div>
 
+Created using:
+
+```
+# Plot Cost vs Epochs
+plt.figure(figsize=(8, 6))
+plt.plot(range(1, epochs + 1), training_costs, label="Training Cost (Log-Loss)")
+plt.title("Cost vs Epochs (Logistic Regression)")
+plt.xlabel("Epochs")
+plt.ylabel("Log-Loss")
+plt.legend()
+plt.show()
+```
+
 The ROC curve for the logistic regression below labels three classes: 0, 1, and 2. These AUC values of a class correspond to how well the model distinguishes samples from the given class in comparison to those from the other two classes. As noted in the legend of the graph: Class 0 has an AUC of 0.75, Class 1 has an AUC of 0.68, and Class 2 has an AUC of 0.73. 
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/321f8dc2-9c31-45ff-ac6f-ceecc3361699" alt="download" width="600" height="500"/>
 </div>
+
+Created using:
+
+```
+# Binarize y_test for ROC curve calculations
+y_test_binarized = label_binarize(y_test, classes=np.unique(y_test))
+
+# Plot the ROC curve for each class
+plt.figure(figsize=(10, 8))
+for i in range(y_test_pred_proba.shape[1]):
+    if np.sum(y_test_binarized[:, i]) == 0:
+        print(f"Skipping class {i} (no positive samples in y_test)")
+        continue
+    fpr, tpr, _ = roc_curve(y_test_binarized[:, i], y_test_pred_proba[:, i])
+    roc_auc = auc(fpr, tpr)
+    plt.plot(fpr, tpr, label=f"Class {i} (AUC = {roc_auc:.2f})")
+
+# Plot the random guessing line
+plt.plot([0, 1], [0, 1], 'k--', label="Random Guessing")
+
+# Customize the plot
+plt.title("ROC Curve (Logistic Regression)")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.legend(loc="lower right")
+plt.show()
+```
 
 The neural network's final performance was an accuracy of 87.38% on the training data and 86.30% on the testing set. Looking at the Cost vs. Epochs graph for the neural network, the curve flattens slowly towards 3.2 (and possibly lower given more epochs).
 
@@ -145,11 +185,57 @@ The neural network's final performance was an accuracy of 87.38% on the training
   <img src="https://github.com/user-attachments/assets/da135b52-1389-48b1-9d13-7ed71ac7f487" alt="download" width="600" height="500"/>
 </div>
 
+Created Using:
+
+```
+# Plot the cost (loss) function over epochs
+plt.plot(history.history['loss'])
+plt.title('Cost vs Epochs (Neural Network)')
+plt.xlabel('Epochs')
+plt.ylabel('Cost')
+plt.show()
+```
+
 Similar to the logistic regression, the ROC curve below labels the same three classes, and as noted in the legend of the graph: Class 0 has an AUC of 0.74, Class 1 has an AUC of 0.68, and Class 2 has an AUC of 0.73. 
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/99749f86-53ae-430a-b3e4-a8d048001d43" alt="download" width="600" height="500"/>
 </div>
+
+Created using
+```
+# Get predicted probabilities for the test set
+y_pred = model.predict(X_test)
+
+# Convert continuous predictions to class labels for ROC curve calculation
+y_pred_labels = np.argmax(y_pred, axis=1)
+y_test_labels = np.argmax(y_test, axis=1)
+
+# Plot the ROC curve for each class
+plt.figure(figsize=(10, 8))
+for i in range(y_test.shape[1]):
+    if np.sum(y_test_labels == i) == 0:
+        print(f"Skipping class {i} (no positive samples in y_test)")
+        continue
+
+    # Calculate FPR, TPR, and AUC for each class
+    fpr, tpr, _ = roc_curve(y_test_labels, y_pred[:, i], pos_label=i)
+    roc_auc = auc(fpr, tpr)
+
+    # Plot the ROC curve
+    plt.plot(fpr, tpr, label=f"Class {i} (AUC = {roc_auc:.2f})")
+
+# Add the random guessing line
+plt.plot([0, 1], [0, 1], 'k--', label="Random Guessing")
+
+# Customize the plot
+plt.title("ROC Curve (Neural Network)")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.legend(loc="lower right")
+plt.grid()
+plt.show()
+```
 
 ## Analysis
 
