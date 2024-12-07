@@ -185,7 +185,7 @@ The neural network's final performance was an accuracy of 87.38% on the training
   <img src="https://github.com/user-attachments/assets/da135b52-1389-48b1-9d13-7ed71ac7f487" alt="download" width="600" height="500"/>
 </div>
 
-Created Using:
+Created using:
 
 ```
 # Plot the cost (loss) function over epochs
