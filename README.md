@@ -5,7 +5,7 @@ A&O Sci C111
 Professor Lozinski
 
 ## Introduction
-Traditional Computers use bits to represent data, which at a low level are acted upon by logic gates and are encodings that remain deterministic (either 0 or 1). However, by expanding the structure of computers and how they represent information, it is possible to leverage aspects of quantum mechanics to perform computations that leverage principles of superposition and entanglement. As a result, the bit is extended to a quantum bit (or qubit for short) that no longer remains deterministic throughout computations and serves as the fundamental means of representing information in a quantum computer. During a qubit's non-deterministic state, it remains in a superposition that collapses to 0 or 1 upon being measured. Moreover, the quantum phenomenon of entanglement plays a crucial role in computation, as it directly relates one qubit to another. While quantum computers are still a scarce resource, emulators of quantum computers exist, like the one provided by IBM in their Quiskit library. These emulators work by utilizing mathematical models to simulate quantum systems. As such there remain some flaws as quantum states are an inherently difficult thing to model; however, such resources still provide unique insights. Machine learning models utilize algorithms to decompose data to help obtain relationships and detect patterns that allow them to perform a variety of tasks. While the models utilized in this paper remain in the traditional realm of computing, a model can indirectly identify patterns that possibly lead to entanglement. 
+Traditional Computers use bits to represent data, which at a low level are acted upon by logic gates and are encodings that remain deterministic (either 0 or 1). However, by expanding the structure of computers and how they represent information, it is possible to leverage aspects of quantum mechanics to perform computations that leverage principles of superposition and entanglement. As a result, the bit is extended to a quantum bit (or qubit for short) that no longer remains deterministic throughout computations and serves as the fundamental means of representing information in a quantum computer. During a qubit's non-deterministic state, it remains in a superposition that collapses to 0 or 1 upon being measured. Moreover, the quantum phenomenon of entanglement plays a crucial role in computation, as it directly relates one qubit to another[1]. While quantum computers are still a scarce resource, emulators of quantum computers exist, like the one provided by IBM in their Quiskit library. These emulators work by utilizing mathematical models to simulate quantum systems. As such there remain some flaws as quantum states are an inherently difficult thing to model; however, such resources still provide unique insights. Machine learning models utilize algorithms to decompose data to help obtain relationships and detect patterns that allow them to perform a variety of tasks. While the models utilized in this article remain in the traditional realm of computing, a model can indirectly identify patterns that possibly lead to entanglement. 
 
 ## Data
 A quantum gate emulator was used to synthetically create data that was later used to train a logistic regression and a neural network. The data began in a “classical” form (contained in a 3 x 5000 array) and was a value between 0 and 1. This value was then encoded into a quantum circuit through the use of angle encoding (essentially turning our data into “quantum form”) and was measured (collapsing the circuit) into a binary string of length 3. This string was then converted into integer form using binary to integer conversion and saved as a measurement of the given row. This process enabled the creation of the data set used: quantum_generated_data.csv. The data set consists of 3 features, which correspond to classical values between 0 and 1 that eventually collapse to an integer after being measured. 
@@ -68,7 +68,9 @@ X_test = scaler.transform(X_test)
 ## Model
 Two types of machine learning models were used (1) a ***logistic regression*** and (2) a ***neural network***.
 
-**Logisitc Regression**
+**Logistic Regression**
+
+While a somewhat simple model, Logistic Regression was selected as a baseline model for future comparison. Not only is the model quick to train, but it does especially well with linear relationships; which could also be its drawback depending on the data. However, since the data set had only 3 features, the model was assumed to still do quite well despite the possibility of the data not being fully linear. The Scikit-learn library was used to implement the logistic regression, specifically, it was a multinomial logistic regression that utilized Limited-memory BFGS as its cost function. 
 
 `````
 # Initialize the Logistic Regression model
@@ -125,17 +127,29 @@ print("Training finished")
 
 ## Results
 
-The logistic regression's final preformance was an accuracy of 87.36% on the training data and 86.30% on the testing set. Below is a Cost vs. Epochs graph for the logistic regression as well as an ROC curve. 
+The logistic regression's final preformance was an accuracy of 87.36% on the training data and 86.30% on the testing set. Below is a Cost vs. Epochs graph for the logistic regression as well as an ROC curve, which is seen to flatten out around 0.4. 
 
-![download](https://github.com/user-attachments/assets/206cfa0a-ae77-4843-afb6-3e9a5ca0963d)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/206cfa0a-ae77-4843-afb6-3e9a5ca0963d" alt="download" width="600" height="500"/>
+</div>
 
-![download](https://github.com/user-attachments/assets/321f8dc2-9c31-45ff-ac6f-ceecc3361699)
+The ROC curve for the logistic regression below labels three classes: 0, 1, 2. These AUC values of a class corresponds to how well the model distinguishes samples from the given class in comparison to those from the other two classes. As noted in the legend of the graph: Class 0 has an AUC of 0.75, Class 1 has an AUC of 0.68, and Class 2 has an AUC of 0.73. 
 
-The neural network's final performance was an accuracy of 87.38% on the training data and 86.30% on the testing set. Below is a Cost vs. Epochs graph for the neural network.
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/321f8dc2-9c31-45ff-ac6f-ceecc3361699" alt="download" width="600" height="500"/>
+</div>
 
-![download](https://github.com/user-attachments/assets/da135b52-1389-48b1-9d13-7ed71ac7f487)
+The neural network's final performance was an accuracy of 87.38% on the training data and 86.30% on the testing set. Below is a Cost vs. Epochs graph for the neural network, which is seen to flatten towards 3.2 (and possibly lower given more epochs).
 
-![download](https://github.com/user-attachments/assets/99749f86-53ae-430a-b3e4-a8d048001d43)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/da135b52-1389-48b1-9d13-7ed71ac7f487" alt="download" width="600" height="500"/>
+</div>
+
+Similar to the logistic regression, the ROC curve below labels the same three classes and as noted in the legend of the graph: Class 0 has an AUC of 0.74, Class 1 has an AUC of 0.68, and Class 2 has an AUC of 0.73. 
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/99749f86-53ae-430a-b3e4-a8d048001d43" alt="download" width="600" height="500"/>
+</div>
 
 
 
@@ -146,3 +160,8 @@ In terms of the accuracy of both models, they had identical accuracies of 86.30 
 ## Conclusion
 
 The similar results by both models hint at the idea the data is possibly linearly related in some manner because logistic regression performs rather well on such data, as was seen in this case. This brings up a question about whether the use of such a complex model like a neural network is justifiable in this case, especially since a much simpler model performed comparingly well. In some sense, it is justifiable in this case (where there are only 3 features) that the use of logistic regression may be the better choice. However, if more features were added (and hence increasing the complexity of the relationship between features and measurement), this decision may not be suitable; especially, if the relationships are not as linear. Moreover, it is apparent that there was room for improvement in terms of adjusting the hyperparameters of the neural network since for the most part they were empirically adjusted. Some possible changes that could be added would be the addition of features in the data set and the usage of different model types. A point of concern to think about in terms of the data is that it was created using (initially) a random number generator which is not truly random and may possibly lead unforeseen patterns to arise within the synthetic data set. Ultimately, the logistic regression and the neural network perform decently at relating classical data to pseudo-quantum data. However, there is an underlying idea illustrated after the results: a complex model does not necessarily mean that it is better.
+
+## References
+
+1. Peter W. Shor, "Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer," *arXiv preprint quant-ph/9508027*, 1994. Available at: [https://arxiv.org/abs/quant-ph/9508027](https://arxiv.org/abs/quant-ph/9508027)
+
