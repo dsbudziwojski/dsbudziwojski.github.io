@@ -202,7 +202,7 @@ Similar to the logistic regression, the ROC curve below labels the same three cl
   <img src="https://github.com/user-attachments/assets/99749f86-53ae-430a-b3e4-a8d048001d43" alt="download" width="600" height="500"/>
 </div>
 
-Created using
+Created using:
 ```
 # Get predicted probabilities for the test set
 y_pred = model.predict(X_test)
