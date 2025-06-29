@@ -1,0 +1,6 @@
+title:       "David Budziwojski’s Website"
+description: "Research notes, projects, and interests"
+url:         "https://dsbudziwojski.github.io"
+baseurl:     ""
+theme:       jekyll-theme-cayman
+logo:        /assets/img/template_logo.png
