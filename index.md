@@ -1,6 +1,5 @@
 ---
 layout: home
-title:  "Home"
 ---
 
 ## David S. Budziwojski
